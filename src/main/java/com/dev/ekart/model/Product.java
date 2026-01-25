@@ -20,31 +20,35 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Users {
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_id", updatable = false)
-	Integer userId;
+	@Column(name = "product_id")
+	Integer productId;
 	
-	@Column(name="name")
-	String name;
+	@Column(name = " name ")
+	String name ;
 	
-	@Column(name="email" , unique = true)
-	String email;
+	@Column(name = "description")
+	String description;
 	
-	@Column(name="password")
-	String password;
+	@Column(name = "price")
+	Double price;
 	
-	@Column(name="role")
-	String role;
+	@Column(name = "stock_quantity")
+	Integer stockQuantity;
 	
-	@Column(name="status")
+	@Column(name = "status")
 	String status;
 	
 	@CreatedDate
-	@Column(name="created_at")
+	@Column(name ="created_at")
 	OffsetDateTime createdAt;
 	
+	
+	@Column(name="seller_id")
+	Integer sellerId;
+	//RELATIONSHIP
 	
 }

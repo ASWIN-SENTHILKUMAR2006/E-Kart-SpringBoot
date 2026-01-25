@@ -1,8 +1,5 @@
 package com.dev.ekart.model;
 
-import java.time.OffsetDateTime;
-
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
@@ -16,35 +13,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Data 
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Users {
+public class CartItem {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_id", updatable = false)
-	Integer userId;
+	@Column(name="cart_item_id")
+	Integer cartItemId;
 	
-	@Column(name="name")
-	String name;
+	@Column(name = "cart_id")
+	Integer cartId;
 	
-	@Column(name="email" , unique = true)
-	String email;
+	@Column(name="product_id")
+	Integer productId;
 	
-	@Column(name="password")
-	String password;
+	@Column(name="quantity")
+	Integer Quantity;
 	
-	@Column(name="role")
-	String role;
+	@Column(name="price_at_add_time")
+	Double priceAtAddTime;
 	
-	@Column(name="status")
-	String status;
 	
-	@CreatedDate
-	@Column(name="created_at")
-	OffsetDateTime createdAt;
+	// RELATIONSHIPS
+	
+	
 	
 	
 }
