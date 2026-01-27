@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.ekart.model.Address;
 
+/**
+ * @author Aswin Senthilkumar
+ *
+ */
+
 @Repository
 public interface AddressRepository extends JpaRepository<Address ,Integer> {
 

@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.ekart.model.CartItem;
 
+/**
+ * @author Aswin Senthilkumar
+ *
+ */
+
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem , Integer> {
 

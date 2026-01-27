@@ -3,7 +3,7 @@ package com.dev.ekart.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dev.ekart.model.Cart;
+import com.dev.ekart.model.Product;
 
 /**
  * @author Aswin Senthilkumar
@@ -11,6 +11,6 @@ import com.dev.ekart.model.Cart;
  */
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart,Integer> {
+public interface ProductRepository extends JpaRepository<Product,Integer> {
 
 }

@@ -7,15 +7,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * @author Aswin Senthilkumar
+ *
+ */
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "payment_rel")
+@EqualsAndHashCode(exclude = "payment_rel")
+
+@Table(name="payment_table")
 public class Payment {
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +36,7 @@ public class Payment {
 	@Column(name="payment_id")
 	Integer paymentId;
 	
-	@Column(name = "order_id")
-	Integer orderId;
+
 	
 	@Column(name ="payment_mode")
 	String paymentMode;
@@ -32,11 +44,13 @@ public class Payment {
 	@Column(name ="payment_status")
 	String paymentStatus;
 	
-	@Transient
+
 	@Column(name="transaction_ref")
 	String transactionRef;
 	
 	
 	// Relationship
-
+	@OneToOne
+	@JoinColumn(name="order_id", referencedColumnName="order_id")
+	private Orders order_rel;
 }

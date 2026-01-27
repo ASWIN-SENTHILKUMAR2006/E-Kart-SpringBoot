@@ -1,6 +1,6 @@
 package com.dev.ekart.model;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,9 +11,17 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+/**
+ * @author Aswin Senthilkumar
+ *
+ */
+
 
 @Entity
 @Data
@@ -44,7 +52,10 @@ public class Users {
 	
 	@CreatedDate
 	@Column(name="created_at")
-	OffsetDateTime createdAt;
+	LocalDateTime createdAt;
 	
+	@OneToOne
+	@JoinColumn(name="cart_id" , referencedColumnName = "cart_id")
+	private Cart cart;
 	
 }

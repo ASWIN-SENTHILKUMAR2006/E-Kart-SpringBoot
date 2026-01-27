@@ -12,6 +12,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author Aswin Senthilkumar
+ *
+ */
+
 @Entity
 @Data
 @AllArgsConstructor

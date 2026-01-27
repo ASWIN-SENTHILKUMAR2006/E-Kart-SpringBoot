@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.dev.ekart.model.Orders;
 
+
+/**
+ * @author Aswin Senthilkumar
+ *
+ */
+
 @Repository
 public interface OrderItemRepository extends JpaRepository<Orders,Integer> {
 
