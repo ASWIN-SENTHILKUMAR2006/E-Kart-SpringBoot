@@ -8,6 +8,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +32,7 @@ public class OrderItem {
 	@Column(name="order_item_id")
 	Integer orderItemId;
 	
-	@Column(name="order_id")
-	Integer orderId;
+
 	
 	@Column(name ="product_name")
 	String  productName;
@@ -46,4 +47,8 @@ public class OrderItem {
 	Integer sellerId;
 	
 	//RELATIONSHIP
+	@ManyToOne
+	@JoinColumn(name="order_id", referencedColumnName="order_id")
+	private Orders orderId;
+	
 }

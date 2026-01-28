@@ -25,8 +25,8 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "payment_rel")
-@EqualsAndHashCode(exclude = "payment_rel")
+@ToString(exclude = "orderRel")
+@EqualsAndHashCode(exclude = "orderRel")
 
 @Table(name="payment_table")
 public class Payment {
@@ -52,5 +52,5 @@ public class Payment {
 	// Relationship
 	@OneToOne
 	@JoinColumn(name="order_id", referencedColumnName="order_id")
-	private Orders order_rel;
+	private Orders orderRel;
 }
