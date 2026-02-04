@@ -33,7 +33,7 @@ public class CartItem {
 	Integer cartItemId;	
 	
 	@Column(name="quantity")
-	Integer Quantity;
+	Integer quantity;
 	
 	@Column(name="price_at_add_time")
 	Double priceAtAddTime;
@@ -45,7 +45,7 @@ public class CartItem {
 	private Product product;
 	
 	@ManyToOne
-	@JoinColumn(name="cart_id", referencedColumnName=" cart_id")
+	@JoinColumn(name="cart_id", referencedColumnName="cart_id")
 	private Cart cart;
 	
 	

@@ -43,8 +43,7 @@ public class Orders {
 	@Column(name ="order_id")
 	Integer orderId;
 	
-	@Column(name="customer_id")
-	Integer customerId;
+	
 	
 	@Column(name ="order_status")
 	String orderStatus;
@@ -62,7 +61,7 @@ public class Orders {
 	
 	@ManyToOne
 	@JoinColumn(name="user_id" , referencedColumnName="user_id")
-	private Users user_rel;
+	private Users userRel;
 	
 	@OneToMany(mappedBy="orderId")
 	private List<OrderItem> orderItems;

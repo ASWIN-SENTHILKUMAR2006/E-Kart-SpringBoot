@@ -12,9 +12,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,16 +56,20 @@ public class Users {
 	
 	
 	// RELATIONSHIPS
-	@OneToOne
-	@JoinColumn(name="cart_id" , referencedColumnName = "cart_id")
-	private Cart cart; 
+//	@OneToOne
+//	@JoinColumn(name="cart_id" , referencedColumnName = "cart_id")
+//	private Cart cart; 
 
-	@OneToMany(mappedBy="user_rel")
+	@OneToMany(mappedBy="userRel")
 	private List<Orders> orderRel;
 	
-	@OneToMany(mappedBy = "user_rel")
+	@OneToMany(mappedBy = "userRel")
 	private List<Address> addresses;
 	
+	@OneToMany(mappedBy="sellerId")
+	private List<Product> products;
 	
+	@OneToMany(mappedBy="userRel")
+	List<Cart> carts;
 
 }

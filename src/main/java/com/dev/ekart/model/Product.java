@@ -12,6 +12,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +36,7 @@ public class Product {
 	@Column(name = "product_id")
 	Integer productId;
 	
-	@Column(name = " name ")
+	@Column(name = "name")
 	String name ;
 	
 	@Column(name = "description")
@@ -54,11 +56,14 @@ public class Product {
 	OffsetDateTime createdAt;
 	
 	
-	@Column(name="seller_id")
-	Integer sellerId;
+	
 	
 	//RELATIONSHIP
 	@OneToMany(mappedBy="product")
 	private List<CartItem>  cartItem;
+	
+	@ManyToOne
+	@JoinColumn(name="seller_id" , referencedColumnName="user_id")
+	private Users sellerId;
 	
 }

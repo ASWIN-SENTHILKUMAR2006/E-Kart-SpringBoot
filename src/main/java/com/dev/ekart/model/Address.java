@@ -30,8 +30,7 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer addressId;
 	
-	@Column(name = "customer_id")
-	Integer customerId;
+	
 	
 	@Column(name="street_details")
 	String street;
@@ -51,6 +50,6 @@ public class Address {
 	//RELATIONSHIP
 	@ManyToOne
 	@JoinColumn(name="user_id" , referencedColumnName = "user_id ")
-	private Users user_rel;
+	private Users userRel;
 	
 }
