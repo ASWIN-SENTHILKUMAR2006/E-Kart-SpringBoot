@@ -44,5 +44,16 @@ public class CartServiceImpl implements CartService {
 		}
 		
 	}
+	
+	public ApiResponse<Optional<Cart>> getActiveCarts(int userId){
+		Optional<Cart> activeCarts = cartRepo.CheckActiveCartExist(userId);
+		if(activeCarts.isPresent()) {
+			ApiResponse<Optional<Cart>> response = new ApiResponse<>("User's Active Carts only Retrieved.",true,activeCarts);
+			return response;
+		}else {
+			ApiResponse<Optional<Cart>> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
+			return response;
+		}
+	}
 
 }

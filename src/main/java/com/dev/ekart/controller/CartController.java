@@ -1,6 +1,7 @@
 package com.dev.ekart.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,12 @@ public class CartController {
 	}
 	
 	
+	@GetMapping("/activecarts/{userId}")
+	public ResponseEntity<ApiResponse<Optional<Cart>>> getActiveCartList(@PathVariable int userId){
+		
+		ApiResponse<Optional<Cart>> response =  cartService.getActiveCarts(userId);
+		return ResponseEntity.ok(response);
+	}
 	
 	@PostMapping("/create")
 	public ResponseEntity<ApiResponse<Cart>> createCart(@RequestBody Cart cart){

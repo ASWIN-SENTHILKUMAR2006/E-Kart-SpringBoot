@@ -23,8 +23,14 @@ public interface CartRepository extends JpaRepository<Cart,Integer> {
 	
 	// ?1 ?2  =>  -- param("name") - >  :name
 	
-	@Query(value="SELECT * FROM CART WHERE customer_id= :userIId AND status=  'ACTIVE' " , nativeQuery = true)
-	Optional<Cart> CheckActiveCartExist(@Param("userIId") Integer userId);
+	@Query(value="SELECT * FROM CART WHERE customer_id= :userId AND status=  'ACTIVE' " , nativeQuery = true)
+	Optional<Cart> CheckActiveCartExist(@Param("userId") Integer userId);
 	
 	List<Cart> findByUserRel_UserId(Integer userId);
+
+	/**
+	 * @return
+	 */
+	
+	
 }
