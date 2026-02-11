@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -66,10 +68,12 @@ public class Users {
 	@OneToMany(mappedBy = "userRel")
 	private List<Address> addresses;
 	
-	@OneToMany(mappedBy="sellerId")
+	@OneToMany(mappedBy="sellerRel")
+	@JsonManagedReference
 	private List<Product> products;
 	
 	@OneToMany(mappedBy="userRel")
+	@JsonManagedReference
 	List<Cart> carts;
 
 }

@@ -55,7 +55,7 @@ public class Cart {
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id" , referencedColumnName="user_id")
-//@JsonIgnore
+//@JsonIgnore // completely ignores the field in json response
     @JsonBackReference
 	private Users userRel;
 	

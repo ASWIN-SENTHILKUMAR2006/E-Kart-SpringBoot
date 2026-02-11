@@ -30,9 +30,14 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	public ApiResponse<Cart> saveCart(Cart cart) {
+		
 		int UserId = cart.getUserRel().getUserId();
+		
 		//Optional<Cart> checkpresent =cartRepo.findByUserRel_UserId(UserId);
+		
 		Optional<Cart> checkpresent =cartRepo.CheckActiveCartExist(UserId);
+		
+		// If no active Carts only we initialize new Cart and it is ACTIVE
 		
 		if(checkpresent.isEmpty()) {
 			Cart newCart  = cartRepo.save(cart);

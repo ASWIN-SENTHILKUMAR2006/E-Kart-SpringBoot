@@ -35,8 +35,8 @@ public class CartItem {
 	@Column(name="quantity")
 	Integer quantity;
 	
-	@Column(name="price_at_add_time")
-	Double priceAtAddTime;
+	@Column(name="price_at_buy_time")
+	Double priceAtBuyTime;
 	
 	
 	// RELATIONSHIPS

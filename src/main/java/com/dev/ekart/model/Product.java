@@ -1,10 +1,13 @@
 package com.dev.ekart.model;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,14 +51,15 @@ public class Product {
 	@Column(name = "stock_quantity")
 	Integer stockQuantity;
 	
-	@Column(name = "status")
-	String status;
+	@Column(name = "status" ,  columnDefinition = "integer default '0'")
+	Integer status;
 	
 	@CreatedDate
 	@Column(name ="created_at")
-	OffsetDateTime createdAt;
+	//OffsetDateTime createdAt;
+	LocalDateTime createdAt;
 	
-	
+//	private int sellerId; // used for inital stage implementation before mapping user entity with product entity
 	
 	
 	//RELATIONSHIP
@@ -64,6 +68,7 @@ public class Product {
 	
 	@ManyToOne
 	@JoinColumn(name="seller_id" , referencedColumnName="user_id")
-	private Users sellerId;
+	@JsonBackReference
+	private Users sellerRel;
 	
 }
