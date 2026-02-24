@@ -64,7 +64,8 @@ public class Product {
 	
 	//RELATIONSHIP
 	@OneToMany(mappedBy="product")
-	@JsonManagedReference//used on parent side
+	//@JsonManagedReference//used on parent side
+	@JsonBackReference
 	private List<CartItem>  cartItem;
 	
 	@ManyToOne

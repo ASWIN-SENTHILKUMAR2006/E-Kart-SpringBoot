@@ -19,7 +19,8 @@ public class CartItemDTO {
 	
 	Integer productId;
 	Integer quantity;
-	Double  priceAtBuyTime;
+	//Double  priceAtBuyTime;
+	Integer userId;
 	
 	
 }

@@ -3,6 +3,7 @@ package com.dev.ekart.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,6 +51,7 @@ public class CartItem {
 	
 	@ManyToOne
 	@JoinColumn(name="cart_id", referencedColumnName="cart_id")
+	@JsonBackReference
 	private Cart cart;
 	
 	

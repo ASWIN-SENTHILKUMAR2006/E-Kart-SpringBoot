@@ -7,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,6 +51,7 @@ public class Cart {
 	
 	// RELATIONSHIPS
 	@OneToMany(mappedBy="cart")
+	@JsonManagedReference
 	private List<CartItem>  cartItem;
 	
 	@ManyToOne
