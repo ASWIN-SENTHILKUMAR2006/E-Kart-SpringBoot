@@ -25,7 +25,7 @@ import com.dev.ekart.service.ProductService;
 @RequestMapping("/product")
 public class ProductController {
 	
-	@Autowired
+	@Autowired			
 	ProductService productService;
 	
 	@GetMapping("/list")

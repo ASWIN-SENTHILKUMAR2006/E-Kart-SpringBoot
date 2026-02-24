@@ -2,6 +2,8 @@ package com.dev.ekart.model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -24,6 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+
 public class CartItem {
 
 	
@@ -33,15 +36,16 @@ public class CartItem {
 	Integer cartItemId;	
 	
 	@Column(name="quantity")
-	Integer quantity;
+	Integer quantity = 1;
 	
 	@Column(name="price_at_buy_time")
-	Double priceAtBuyTime;
+	Double priceAtBuyTime; // unwanted field
 	
 	
 	// RELATIONSHIPS
 	@ManyToOne
 	@JoinColumn(name="product_id" , referencedColumnName="product_id")
+	@JsonBackReference
 	private Product product;
 	
 	@ManyToOne
