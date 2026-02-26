@@ -7,9 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.ekart.ApiResponse;
+import com.dev.ekart.dto.CartDTO;
 import com.dev.ekart.model.Cart;
+import com.dev.ekart.model.Users;
 import com.dev.ekart.repository.CartRepository;
+import com.dev.ekart.repository.UserRepository;
 import com.dev.ekart.service.CartService;
+
+import jakarta.transaction.Transactional;
 
 /**
  * @author Aswin Senthilkumar
@@ -23,24 +28,44 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	CartRepository cartRepo;
 	
+	@Autowired
+	UserRepository userRepo;
+	
 	public List<Cart> getCarts(int userId) {
 		List<Cart> carts = cartRepo.findByUserRel_UserId(userId);
 		
 		return carts;
 	}
 	
-	public ApiResponse<Cart> saveCart(Cart cart) {
+	
+	@Transactional
+	public ApiResponse<Cart> saveCart(CartDTO cartDTO) {
 		
-		int UserId = cart.getUserRel().getUserId();
+		// check if user present
+		int userId = cartDTO.getUserId();
+		
+		Optional <Users> checkUser = userRepo.findById(userId);
+		if(checkUser.isEmpty()) {
+			ApiResponse<Cart> response = new ApiResponse<>("No such User Id !! , can't create Cart" , false , null);
+			return response;
+		}
 		
 		//Optional<Cart> checkpresent =cartRepo.findByUserRel_UserId(UserId);
 		
-		Optional<Cart> checkpresent =cartRepo.CheckActiveCartExist(UserId);
-		
+		Optional<Cart> checkpresent =cartRepo.CheckActiveCartExist(userId);
+
 		// If no active Carts only we initialize new Cart and it is ACTIVE
 		
 		if(checkpresent.isEmpty()) {
+			
+			Cart cart = new Cart();
+			
+			Users user = checkUser.get();
+			
+			cart.setStatus(cartDTO.getStatus());
+			cart.setUserRel(user);
 			Cart newCart  = cartRepo.save(cart);
+			
 			ApiResponse<Cart> response = new ApiResponse<>("new Cart Created Successfully" , true , newCart);
 			return response;
 		}else {

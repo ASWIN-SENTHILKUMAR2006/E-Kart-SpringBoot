@@ -20,7 +20,7 @@ import com.dev.ekart.service.UserService;
  *
  */
 
-@RestController()
+@RestController
 @RequestMapping("user")
 public class UserController {
 

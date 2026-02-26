@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.ekart.ApiResponse;
+import com.dev.ekart.dto.CartDTO;
 import com.dev.ekart.model.Cart;
 import com.dev.ekart.service.CartService;
 
@@ -46,10 +47,11 @@ public class CartController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<ApiResponse<Cart>> createCart(@RequestBody Cart cart){
+	public ResponseEntity<ApiResponse<Cart>> createCart(@RequestBody CartDTO cart){
 		
 		ApiResponse<Cart> response = cartService.saveCart(cart);
-		 
+//		CartDTO cartResponse = new CartDTO();
+//		cartResponse.setUserId(null)
 		return ResponseEntity.ok(response);
 	}
 	

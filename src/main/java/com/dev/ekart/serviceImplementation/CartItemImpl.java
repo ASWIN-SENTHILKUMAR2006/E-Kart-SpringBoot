@@ -16,6 +16,8 @@ import com.dev.ekart.repository.ProductRepository;
 import com.dev.ekart.service.CartItemService;
 import com.dev.ekart.service.CartService;
 
+import jakarta.transaction.Transactional;
+
 /**
  * @author Aswin Senthilkumar
  *
@@ -35,15 +37,17 @@ public class CartItemImpl implements CartItemService{
 	@Autowired
 	CartService cartService;
 	
-	
+
+	@Transactional
 public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem){
 	
 		//get Active Cart
 		Optional<Cart> activeCart = cartRepo.CheckActiveCartExist(cartitem.getUserId());
-	
-		//	if(activeCart.isEmpty()) {
-			// need to define logic need to change cartDTO
-	   //	}
+			
+			// no active cart
+			if(activeCart.isEmpty()) {
+//			 need to define logic need to change cartDTO
+	   	}
 		
 	    	Cart cartDetails = activeCart.get();
 					
