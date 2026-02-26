@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.ekart.ApiResponse;
 import com.dev.ekart.dto.CartDTO;
+import com.dev.ekart.dto.CartResponseDTO;
 import com.dev.ekart.model.Cart;
 import com.dev.ekart.service.CartService;
 
@@ -46,13 +47,25 @@ public class CartController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<ApiResponse<Cart>> createCart(@RequestBody CartDTO cart){
+	@PostMapping("/create") // try - ApiResponse<T>
+	public ResponseEntity<ApiResponse<CartResponseDTO>> createCart(@RequestBody CartDTO cart){
 		
 		ApiResponse<Cart> response = cartService.saveCart(cart);
-//		CartDTO cartResponse = new CartDTO();
-//		cartResponse.setUserId(null)
-		return ResponseEntity.ok(response);
+		
+		if(response.getSuccess() == true) {
+		CartResponseDTO cartResponse = new CartResponseDTO();
+		
+		cartResponse.setStatus(response.getData().getStatus());
+		cartResponse.setCreatedAt(response.getData().getCreatedAt());
+		cartResponse.setUserId(response.getData().getUserRel().getUserId());
+		
+		ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage(), true , cartResponse);
+		return ResponseEntity.ok(serviceResponse);
+		}else {
+			ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage() , false , null);
+			return ResponseEntity.ok(serviceResponse);
+		}
+		
 	}
 	
 }

@@ -51,13 +51,13 @@ public class Cart {
 	
 	// RELATIONSHIPS
 	@OneToMany(mappedBy="cart")
-	@JsonManagedReference
+	@JsonManagedReference("cartItem-cart")
 	private List<CartItem>  cartItem;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id" , referencedColumnName="user_id")
 //@JsonIgnore // completely ignores the field in json response
-    @JsonBackReference
+    @JsonBackReference("cart-user")
 	private Users userRel;
 	
 

@@ -65,12 +65,12 @@ public class Product {
 	//RELATIONSHIP
 	@OneToMany(mappedBy="product")
 	//@JsonManagedReference//used on parent side
-	@JsonBackReference
+	@JsonBackReference("cartItem-product")
 	private List<CartItem>  cartItem;
 	
 	@ManyToOne
 	@JoinColumn(name="seller_id" , referencedColumnName="user_id")
-	@JsonBackReference
+	@JsonBackReference("user-product")
 	private Users sellerRel;
 	
 }

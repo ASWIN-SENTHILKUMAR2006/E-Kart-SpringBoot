@@ -46,12 +46,12 @@ public class CartItem {
 	// RELATIONSHIPS
 	@ManyToOne
 	@JoinColumn(name="product_id" , referencedColumnName="product_id")
-	@JsonBackReference
+	@JsonBackReference("cartItem-product")
 	private Product product;
 	
 	@ManyToOne
 	@JoinColumn(name="cart_id", referencedColumnName="cart_id")
-	@JsonBackReference
+	@JsonBackReference("cartItem-cart")
 	private Cart cart;
 	
 	

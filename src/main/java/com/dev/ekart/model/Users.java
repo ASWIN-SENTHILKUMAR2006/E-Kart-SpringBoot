@@ -69,11 +69,11 @@ public class Users {
 	private List<Address> addresses;
 	
 	@OneToMany(mappedBy="sellerRel")
-	@JsonManagedReference
+	@JsonManagedReference("user-product")
 	private List<Product> products;
 	
 	@OneToMany(mappedBy="userRel")
-	@JsonManagedReference
+	@JsonManagedReference("cart-user")
 	List<Cart> carts;
 
 }

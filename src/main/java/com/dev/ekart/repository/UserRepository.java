@@ -19,6 +19,12 @@ import com.dev.ekart.model.Users;
 public interface UserRepository  extends JpaRepository<Users,Integer>{
 
 	@Query(value="SELECT * FROM users WHERE user_id = ?1 and role ='SELLER'  ",nativeQuery=true)
-	public Optional<Users> checkSeller(@Param("sellerId") int sellerId); 
+	public Optional<Users> checkSeller(@Param("sellerId") int sellerId);
+
+	/**
+	 * @param email
+	 * @return
+	 */
+	public Optional<Users> findByEmail(String email); 
 	
 }
