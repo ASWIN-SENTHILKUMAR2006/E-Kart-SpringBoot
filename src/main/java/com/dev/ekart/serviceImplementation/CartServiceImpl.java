@@ -31,6 +31,7 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	UserRepository userRepo;
 	
+	// from Cart End point Creation
 	public List<Cart> getCarts(int userId) {
 		List<Cart> carts = cartRepo.findByUserRel_UserId(userId);
 		
@@ -74,6 +75,33 @@ public class CartServiceImpl implements CartService {
 		}
 		
 	}
+	
+	// from other triggers create Cart
+	@Transactional
+	public ApiResponse<Cart> createCart(int userId){
+		
+		// check if user present
+				
+				
+				Optional <Users> checkUser = userRepo.findById(userId);
+				if(checkUser.isEmpty()) {
+					ApiResponse<Cart> response = new ApiResponse<>("No such User Id !! , can't create Cart" , false , null);
+					return response;
+				}
+
+					Cart cart = new Cart();
+					Users user = checkUser.get();
+					
+					cart.setStatus("ACTIVE");
+					cart.setUserRel(user);
+					Cart newCart  = cartRepo.save(cart);
+					
+					ApiResponse<Cart> response = new ApiResponse<>("new Cart Created Successfully - create cart" , true , newCart);
+					return response; 
+
+	}
+	
+	
 	
 	public ApiResponse<Optional<Cart>> getActiveCarts(int userId){
 		Optional<Cart> activeCarts = cartRepo.CheckActiveCartExist(userId);

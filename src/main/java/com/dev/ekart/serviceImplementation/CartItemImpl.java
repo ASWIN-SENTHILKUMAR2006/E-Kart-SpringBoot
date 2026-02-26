@@ -46,15 +46,34 @@ public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem){
 			
 			// no active cart
 			if(activeCart.isEmpty()) {
-//			 need to define logic need to change cartDTO
+				Integer userId = cartitem.getUserId();
+				ApiResponse<Cart> newCart = cartService.createCart(userId);	
+				// Again get  Active cart After Creation - to give next as input
+				activeCart = cartRepo.CheckActiveCartExist(cartitem.getUserId());
+				
+					// again empty return false on operation
+				if(activeCart.isEmpty()) {
+					ApiResponse<CartItem> response = new ApiResponse("Cart Creation Failed After Second time - CartItem" , false,null);
+				}
 	   	}
 		
 	    	Cart cartDetails = activeCart.get();
 					
 		// get product Details
 		Integer productId = cartitem.getProductId();
-		Product selectedProduct = productRepo.getById(productId);
+		Optional <Product> selectedProduct = productRepo.findById(productId);
 			//	.orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));;
+		
+		if(selectedProduct.isEmpty()) {
+			// if product not exist
+			
+			ApiResponse<CartItem> response = new ApiResponse("Product Not Exist to be added as CartItem !!" , false,null);
+			return  response;
+			
+		}
+		
+		
+		
 		
 		// Check item Already in cart
 		Optional<CartItem> cartItemExists = cartItemRepo.checkCartItemExist(cartitem.getUserId() , cartitem.getProductId());
@@ -73,10 +92,10 @@ public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem){
 		}else {
 			
 			CartItem newCartItem = new CartItem();
-			
-			newCartItem.setProduct(selectedProduct);
+			// selected Product is Optional
+			newCartItem.setProduct(selectedProduct.get());
 			// unwanted field
-			newCartItem.setPriceAtBuyTime(selectedProduct.getPrice());
+			newCartItem.setPriceAtBuyTime(selectedProduct.get().getPrice());
 			newCartItem.setQuantity(cartitem.getQuantity());
 			newCartItem.setCart(cartDetails);
 			

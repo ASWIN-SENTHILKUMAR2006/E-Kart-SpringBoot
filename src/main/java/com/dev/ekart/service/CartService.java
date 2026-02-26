@@ -28,5 +28,9 @@ public interface CartService {
 	 */
 	public ApiResponse<Optional<Cart>> getActiveCarts(int userId);
 	
-
+	/**
+	 * @param userId
+	 * @return
+	 */
+	public ApiResponse<Cart> createCart(int userId);
 }
