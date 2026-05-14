@@ -23,6 +23,13 @@ public interface ProductService {
 	 * @return
 	 */
 	ApiResponse<Product> addProduct(int sellerId, ProductDTO productDTO);
+	
+	
+	/**
+	 * @param sellerId 
+	 * @return
+	 */
+	 ApiResponse<String> deleteProduct(int id);
 
 	
 

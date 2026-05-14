@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dev.ekart.ApiResponse;
 import com.dev.ekart.dto.CartDTO;
 import com.dev.ekart.dto.CartResponseDTO;
+import com.dev.ekart.dto.OrderDetailsDTO;
 import com.dev.ekart.model.Cart;
 import com.dev.ekart.service.CartService;
 
@@ -66,6 +68,15 @@ public class CartController {
 			return ResponseEntity.ok(serviceResponse);
 		}
 		
+	}
+	
+	@PostMapping("/checkout/{userId}")
+	public ResponseEntity<ApiResponse<OrderDetailsDTO>> checkoutCartItems(@PathVariable int userId){
+		ApiResponse<OrderDetailsDTO>  checkoutDetails = cartService.checkoutCartItems(userId);
+		if(checkoutDetails.getSuccess() == false) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(checkoutDetails);
+		}
+		return null;
 	}
 	
 }

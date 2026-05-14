@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.dev.ekart.ApiResponse;
 import com.dev.ekart.dto.CartDTO;
+import com.dev.ekart.dto.OrderDetailsDTO;
 import com.dev.ekart.model.Cart;
 
 /**
@@ -33,4 +34,12 @@ public interface CartService {
 	 * @return
 	 */
 	public ApiResponse<Cart> createCart(int userId);
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	public ApiResponse<OrderDetailsDTO>  checkoutCartItems(int userId);
 }
+
+

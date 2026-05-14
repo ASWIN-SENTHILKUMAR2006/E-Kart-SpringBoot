@@ -62,4 +62,24 @@ public class ProductServiceImpl  implements ProductService{
 		}
 	}
 	
+	
+	public ApiResponse<String> deleteProduct(int id){
+		
+		Optional<Product> product = productRepo.findById(id);
+		String message ;
+		Boolean status;
+		if(product.isPresent()) {
+ 		productRepo.deleteById(id);
+ 		message = "Product deleted : ID - " + id +" Product - Name : "+ product.get().getName() ;
+ 		status = true;
+		}else {
+			message = "No Product Found in ID -  " + id;
+			status = false;
+		}
+		
+		ApiResponse<String> response = new ApiResponse<>(message,true , null  );
+		
+		return response;
+	}
+	
 }

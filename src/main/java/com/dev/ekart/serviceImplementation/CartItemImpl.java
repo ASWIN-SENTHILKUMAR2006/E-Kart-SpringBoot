@@ -1,5 +1,6 @@
 package com.dev.ekart.serviceImplementation;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,15 @@ public class CartItemImpl implements CartItemService{
 
 	@Transactional
 public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem){
-	
+		
+		//if(cartitem.getProductId() == 2) throw new RuntimeException("Check");
+		
 		//get Active Cart
 		Optional<Cart> activeCart = cartRepo.CheckActiveCartExist(cartitem.getUserId());
 			
 			// no active cart
 			if(activeCart.isEmpty()) {
+				
 				Integer userId = cartitem.getUserId();
 				ApiResponse<Cart> newCart = cartService.createCart(userId);	
 				// Again get  Active cart After Creation - to give next as input
@@ -68,6 +72,10 @@ public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem){
 			// if product not exist
 			
 			ApiResponse<CartItem> response = new ApiResponse("Product Not Exist to be added as CartItem !!" , false,null);
+			return  response;
+			
+		}else if(selectedProduct.get().getStockQuantity() < cartitem.getQuantity()) {
+			ApiResponse<CartItem> response = new ApiResponse("Requested product Quantity not  available !!" , false,null);
 			return  response;
 			
 		}
@@ -107,4 +115,17 @@ public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem){
 
 		}
 	}
+	
+	public ApiResponse<List<CartItem>> getActiveCartItemsDetails(int userId){
+		
+		Optional<Cart>  cartInfo = cartRepo.CheckActiveCartExist(userId);
+		
+		int cartId = cartInfo.get().getCartId();
+		List<CartItem> cartItems =cartItemRepo.getCartItemsByCartId(cartId);
+		ApiResponse<List<CartItem>> response = new ApiResponse("CartItems from active Cart retrieved" , true , cartItems);
+		
+		return response;
+	}
+
+	
 }

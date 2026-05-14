@@ -1,5 +1,6 @@
 package com.dev.ekart.serviceImplementation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.dev.ekart.ApiResponse;
 import com.dev.ekart.dto.CartDTO;
+import com.dev.ekart.dto.OrderDetailsDTO;
 import com.dev.ekart.model.Cart;
+import com.dev.ekart.model.CartItem;
 import com.dev.ekart.model.Users;
 import com.dev.ekart.repository.CartRepository;
 import com.dev.ekart.repository.UserRepository;
@@ -112,6 +115,22 @@ public class CartServiceImpl implements CartService {
 			ApiResponse<Optional<Cart>> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
 			return response;
 		}
+	}
+	
+	
+	public ApiResponse<OrderDetailsDTO>  checkoutCartItems(int userId) {
+		Optional<Cart> activeCart = cartRepo.CheckActiveCartExist(userId);
+		if(activeCart.isEmpty()) {
+			ApiResponse<OrderDetailsDTO> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
+			return response;			
+		}
+		Cart data = activeCart.get();
+		List<CartItem> cartItems = data.getCartItem();
+		
+		
+		
+		return null;
+		
 	}
 
 }

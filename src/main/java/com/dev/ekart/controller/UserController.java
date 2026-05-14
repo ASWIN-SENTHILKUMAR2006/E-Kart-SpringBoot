@@ -2,6 +2,8 @@ package com.dev.ekart.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dev.ekart.ApiResponse;
 import com.dev.ekart.model.Users;
 import com.dev.ekart.service.UserService;
+
+
 
 /**
  * @author Aswin Senthilkumar
@@ -48,5 +52,21 @@ public class UserController {
 			return ResponseEntity.ok(serviceResponse);
 		}
 		}
+	
+	
+	
+	
+	private static final Logger logger = 
+	        LoggerFactory.getLogger(UserController.class);
+
+	    @GetMapping("/hello")
+	    public String hello() {
+	        logger.info("Hello endpoint called");
+	        logger.debug("Debugging hello method");
+	        logger.warn("This is a warning message");
+	        logger.error("This is an error message");
+
+	        return "Hello World";
+	    }
 	
 }
