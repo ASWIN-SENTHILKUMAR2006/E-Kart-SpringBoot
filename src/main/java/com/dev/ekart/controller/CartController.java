@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.CartDTO;
-import com.dev.ekart.dto.CartResponseDTO;
-import com.dev.ekart.dto.OrderDetailsDTO;
-import com.dev.ekart.model.Cart;
+import com.dev.ekart.requestDTO.CartRequestDTO;
+import com.dev.ekart.responseDTO.CartResponseDTO;
 import com.dev.ekart.service.CartService;
 
 /**
@@ -34,34 +32,28 @@ public class CartController {
 	CartService cartService ; // here cartservice is an interface using @Autowired spring injects  an instance of CartServiceImplementation in it.
 	
 	@GetMapping("/list/{userId}")
-	public ResponseEntity<ApiResponse<List<Cart>>> getCartList(@PathVariable int userId){
-		List<Cart> carts =  cartService.getCarts(userId);
+	public ResponseEntity<ApiResponse<List<CartResponseDTO>>> getCartList(@PathVariable int userId){
+		List<CartResponseDTO> carts =  cartService.getCarts(userId);
 		
-		ApiResponse<List<Cart>> response = new ApiResponse<>("List of Carts++" , true , carts);
+		ApiResponse<List<CartResponseDTO>> response = new ApiResponse<>("List of Carts++" , true , carts);
 		return  ResponseEntity.ok(response);
 	}
 	
 	
 	@GetMapping("/activecarts/{userId}")
-	public ResponseEntity<ApiResponse<Optional<Cart>>> getActiveCartList(@PathVariable int userId){
+	public ResponseEntity<ApiResponse<Optional<CartResponseDTO>>> getActiveCartList(@PathVariable int userId){
 		
-		ApiResponse<Optional<Cart>> response =  cartService.getActiveCarts(userId);
+		ApiResponse<Optional<CartResponseDTO>> response =  cartService.getActiveCarts(userId);
 		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping("/create") // try - ApiResponse<T>
-	public ResponseEntity<ApiResponse<CartResponseDTO>> createCart(@RequestBody CartDTO cart){
+	public ResponseEntity<ApiResponse<CartResponseDTO>> createCart(@RequestBody CartRequestDTO cart){
 		
-		ApiResponse<Cart> response = cartService.saveCart(cart);
+		ApiResponse<CartResponseDTO> response = cartService.saveCart(cart);
 		
 		if(response.getSuccess() == true) {
-		CartResponseDTO cartResponse = new CartResponseDTO();
-		
-		cartResponse.setStatus(response.getData().getStatus());
-		cartResponse.setCreatedAt(response.getData().getCreatedAt());
-		cartResponse.setUserId(response.getData().getUserRel().getUserId());
-		
-		ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage(), true , cartResponse);
+		ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage(), true , response.getData());
 		return ResponseEntity.ok(serviceResponse);
 		}else {
 			ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage() , false , null);
@@ -71,12 +63,12 @@ public class CartController {
 	}
 	
 	@PostMapping("/checkout/{userId}")
-	public ResponseEntity<ApiResponse<OrderDetailsDTO>> checkoutCartItems(@PathVariable int userId){
-		ApiResponse<OrderDetailsDTO>  checkoutDetails = cartService.checkoutCartItems(userId);
+	public ResponseEntity<ApiResponse<String>> checkoutCartItems(@PathVariable int userId){
+		ApiResponse<String>  checkoutDetails = cartService.checkoutCartItems(userId);
 		if(checkoutDetails.getSuccess() == false) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(checkoutDetails);
 		}
-		return null;
+		return ResponseEntity.ok(checkoutDetails);
 	}
 	
 }

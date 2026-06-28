@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.model.Users;
+import com.dev.ekart.requestDTO.UserRequestDTO;
+import com.dev.ekart.responseDTO.UserResponseDTO;
 import com.dev.ekart.service.UserService;
 
 
@@ -33,22 +34,22 @@ public class UserController {
 	
 	
 	@GetMapping("/list")
-	public ResponseEntity<ApiResponse<List<Users>>>getUsers( ){
-		List<Users> users =  userService.getUsers();
-		ApiResponse<List<Users>> response = new ApiResponse<>("List of Users retrieved", true ,users); 
+	public ResponseEntity<ApiResponse<List<UserResponseDTO>>>getUsers( ){
+		List<UserResponseDTO> users =  userService.getUsers();
+		ApiResponse<List<UserResponseDTO>> response = new ApiResponse<>("List of Users retrieved", true ,users); 
 		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<ApiResponse<Users>> createUser(@RequestBody Users UserData){
+	public ResponseEntity<ApiResponse<UserResponseDTO>> createUser(@RequestBody UserRequestDTO UserData){
 		
-		ApiResponse<Users> response = userService.saveUser(UserData);
+		ApiResponse<UserResponseDTO> response = userService.saveUser(UserData);
 		
 		if(response.getSuccess() == true) {
-			ApiResponse<Users> serviceResponse = new ApiResponse<>(response.getMessage(),true,response.getData());
+			ApiResponse<UserResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage(),true,response.getData());
 			return ResponseEntity.ok(serviceResponse);
 		}else {
-			ApiResponse<Users> serviceResponse = new ApiResponse<>(response.getMessage(),true,null);
+			ApiResponse<UserResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage(),false,null);
 			return ResponseEntity.ok(serviceResponse);
 		}
 		}

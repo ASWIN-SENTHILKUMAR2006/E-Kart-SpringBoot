@@ -1,23 +1,10 @@
 package com.dev.ekart.dto;
 
-import java.time.LocalDateTime;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
- * @author Aswin Senthilkumar
- *
+ * Legacy DTO package placeholder retained intentionally during migration.
+ * Use `com.dev.ekart.responseDTO.CartResponseDTO` instead.
  */
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Deprecated
 public class CartResponseDTO {
-
-	String status;
-	LocalDateTime createdAt;
-	Integer userId;
+	// existing code migrated to responseDTO; this legacy class is intentionally empty.
 }

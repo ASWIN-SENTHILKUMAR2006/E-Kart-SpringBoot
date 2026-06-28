@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.CartItemDTO;
-import com.dev.ekart.model.CartItem;
+import com.dev.ekart.requestDTO.CartItemRequestDTO;
+import com.dev.ekart.responseDTO.CartItemResponseDTO;
 import com.dev.ekart.service.CartItemService;
 
 /**
@@ -31,16 +31,16 @@ public class CartItemController {
 	CartItemService cartItemService;
 	
 	@GetMapping("/get/{userId}")//get active cartitems only
-	public ResponseEntity<ApiResponse<List<CartItem>>> getActiveCartItems(@PathVariable int userId ){
-		ApiResponse<List<CartItem>> response = cartItemService.getActiveCartItemsDetails(userId);
+	public ResponseEntity<ApiResponse<List<CartItemResponseDTO>>> getActiveCartItems(@PathVariable int userId ){
+		ApiResponse<List<CartItemResponseDTO>> response = cartItemService.getActiveCartItemsDetails(userId);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<ApiResponse<CartItem>> addItem(@RequestBody CartItemDTO cartitem){
+	public ResponseEntity<ApiResponse<CartItemResponseDTO>> addItem(@RequestBody CartItemRequestDTO cartitem){
 		
-		ApiResponse<CartItem> response = cartItemService.addCartItem(cartitem) ;
+		ApiResponse<CartItemResponseDTO> response = cartItemService.addCartItem(cartitem) ;
 		return ResponseEntity.ok(response);
 		
 	}

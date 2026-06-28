@@ -3,8 +3,8 @@ package com.dev.ekart.service;
 import java.util.List;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.ProductDTO;
-import com.dev.ekart.model.Product;
+import com.dev.ekart.requestDTO.ProductRequestDTO;
+import com.dev.ekart.responseDTO.ProductResponseDTO;
 
 /**
  * @author Aswin Senthilkumar
@@ -15,14 +15,14 @@ public interface ProductService {
 	/**
 	 * @return
 	 */
-	ApiResponse<List<Product>> getProductList();
+	ApiResponse<List<ProductResponseDTO>> getProductList();
 
 	/**
 	 * @param sellerId 
 	 * @param productDTO
 	 * @return
 	 */
-	ApiResponse<Product> addProduct(int sellerId, ProductDTO productDTO);
+	ApiResponse<ProductResponseDTO> addProduct(int sellerId, ProductRequestDTO productDTO);
 	
 	
 	/**

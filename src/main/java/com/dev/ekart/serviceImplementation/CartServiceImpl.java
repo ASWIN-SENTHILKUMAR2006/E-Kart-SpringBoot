@@ -3,13 +3,14 @@ package com.dev.ekart.serviceImplementation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.CartDTO;
-import com.dev.ekart.dto.OrderDetailsDTO;
+import com.dev.ekart.requestDTO.CartRequestDTO;
+import com.dev.ekart.responseDTO.CartResponseDTO;
 import com.dev.ekart.model.Cart;
 import com.dev.ekart.model.CartItem;
 import com.dev.ekart.model.Users;
@@ -35,22 +36,20 @@ public class CartServiceImpl implements CartService {
 	UserRepository userRepo;
 	
 	// from Cart End point Creation
-	public List<Cart> getCarts(int userId) {
-		List<Cart> carts = cartRepo.findByUserRel_UserId(userId);
-		
-		return carts;
+	public List<CartResponseDTO> getCarts(int userId) {
+		return cartRepo.findByUserRel_UserId(userId).stream().map(this::toResponseDTO).collect(Collectors.toList());
 	}
 	
 	
 	@Transactional
-	public ApiResponse<Cart> saveCart(CartDTO cartDTO) {
+	public ApiResponse<CartResponseDTO> saveCart(CartRequestDTO cartDTO) {
 		
 		// check if user present
 		int userId = cartDTO.getUserId();
 		
 		Optional <Users> checkUser = userRepo.findById(userId);
 		if(checkUser.isEmpty()) {
-			ApiResponse<Cart> response = new ApiResponse<>("No such User Id !! , can't create Cart" , false , null);
+			ApiResponse<CartResponseDTO> response = new ApiResponse<>("No such User Id !! , can't create Cart" , false , null);
 			return response;
 		}
 		
@@ -70,10 +69,10 @@ public class CartServiceImpl implements CartService {
 			cart.setUserRel(user);
 			Cart newCart  = cartRepo.save(cart);
 			
-			ApiResponse<Cart> response = new ApiResponse<>("new Cart Created Successfully" , true , newCart);
+			ApiResponse<CartResponseDTO> response = new ApiResponse<>("new Cart Created Successfully" , true , toResponseDTO(newCart));
 			return response; 
 		}else {
-			ApiResponse<Cart> response = new ApiResponse<>("User Already have an active Cart" , false , null);
+			ApiResponse<CartResponseDTO> response = new ApiResponse<>("User Already have an active Cart" , false , null);
 			return response;
 		}
 		
@@ -81,14 +80,14 @@ public class CartServiceImpl implements CartService {
 	
 	// from other triggers create Cart
 	@Transactional
-	public ApiResponse<Cart> createCart(int userId){
+	public ApiResponse<CartResponseDTO> createCart(int userId){
 		
 		// check if user present
 				
 				
 				Optional <Users> checkUser = userRepo.findById(userId);
 				if(checkUser.isEmpty()) {
-					ApiResponse<Cart> response = new ApiResponse<>("No such User Id !! , can't create Cart" , false , null);
+					ApiResponse<CartResponseDTO> response = new ApiResponse<>("No such User Id !! , can't create Cart" , false , null);
 					return response;
 				}
 
@@ -99,38 +98,47 @@ public class CartServiceImpl implements CartService {
 					cart.setUserRel(user);
 					Cart newCart  = cartRepo.save(cart);
 					
-					ApiResponse<Cart> response = new ApiResponse<>("new Cart Created Successfully - create cart" , true , newCart);
+					ApiResponse<CartResponseDTO> response = new ApiResponse<>("new Cart Created Successfully - create cart" , true , toResponseDTO(newCart));
 					return response; 
 
 	}
 	
 	
 	
-	public ApiResponse<Optional<Cart>> getActiveCarts(int userId){
+	public ApiResponse<Optional<CartResponseDTO>> getActiveCarts(int userId){
 		Optional<Cart> activeCarts = cartRepo.CheckActiveCartExist(userId);
 		if(activeCarts.isPresent()) {
-			ApiResponse<Optional<Cart>> response = new ApiResponse<>("User's Active Carts only Retrieved.",true,activeCarts);
+			ApiResponse<Optional<CartResponseDTO>> response = new ApiResponse<>("User's Active Carts only Retrieved.",true,Optional.of(toResponseDTO(activeCarts.get())));
 			return response;
 		}else {
-			ApiResponse<Optional<Cart>> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
+			ApiResponse<Optional<CartResponseDTO>> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
 			return response;
 		}
 	}
 	
 	
-	public ApiResponse<OrderDetailsDTO>  checkoutCartItems(int userId) {
+	public ApiResponse<String>  checkoutCartItems(int userId) {
 		Optional<Cart> activeCart = cartRepo.CheckActiveCartExist(userId);
 		if(activeCart.isEmpty()) {
-			ApiResponse<OrderDetailsDTO> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
+			ApiResponse<String> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
 			return response;			
 		}
 		Cart data = activeCart.get();
 		List<CartItem> cartItems = data.getCartItem();
+		// TODO: checkout flow is not implemented in the original codebase; returning a placeholder keeps the DTO refactor limited to the coded path.
+		return new ApiResponse<>("Checkout flow is not implemented yet.", false, null);
 		
-		
-		
-		return null;
-		
+	}
+
+	private CartResponseDTO toResponseDTO(Cart cart) {
+		if (cart == null) {
+			return null;
+		}
+		return new CartResponseDTO(
+				cart.getCartId(),
+				cart.getStatus(),
+				cart.getCreatedAt(),
+				cart.getUserRel() != null ? cart.getUserRel().getUserId() : null);
 	}
 
 }

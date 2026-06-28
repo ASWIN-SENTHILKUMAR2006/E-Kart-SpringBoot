@@ -1,13 +1,9 @@
 package com.dev.ekart.dto;
 
 /**
- * @author Aswin Senthilkumar
- *
+ * Legacy DTO placeholder retained intentionally during migration.
  */
+@Deprecated
 public class UserCartDTO {
-	
-	int cartId;
-	String status;
-	
-
+	// intentionally empty
 }

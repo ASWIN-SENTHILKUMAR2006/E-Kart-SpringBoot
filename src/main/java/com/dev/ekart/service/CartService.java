@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.CartDTO;
-import com.dev.ekart.dto.OrderDetailsDTO;
-import com.dev.ekart.model.Cart;
+import com.dev.ekart.requestDTO.CartRequestDTO;
+import com.dev.ekart.responseDTO.CartResponseDTO;
 
 /**
  * @author Aswin Senthilkumar
@@ -15,31 +14,31 @@ import com.dev.ekart.model.Cart;
 
 public interface CartService {
 
-	public List<Cart> getCarts(int userId);
+	public List<CartResponseDTO> getCarts(int userId);
 
 	/**
 	 * @param cart
 	 * @return
 	 */
-	public ApiResponse<Cart> saveCart(CartDTO cart);
+	public ApiResponse<CartResponseDTO> saveCart(CartRequestDTO cart);
 
 	/**
 	 * @param userId
 	 * @return
 	 */
-	public ApiResponse<Optional<Cart>> getActiveCarts(int userId);
+	public ApiResponse<Optional<CartResponseDTO>> getActiveCarts(int userId);
 	
 	/**
 	 * @param userId
 	 * @return
 	 */
-	public ApiResponse<Cart> createCart(int userId);
+	public ApiResponse<CartResponseDTO> createCart(int userId);
 
 	/**
 	 * @param userId
 	 * @return
 	 */
-	public ApiResponse<OrderDetailsDTO>  checkoutCartItems(int userId);
+	public ApiResponse<String>  checkoutCartItems(int userId);
 }
 
 

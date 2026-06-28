@@ -3,8 +3,8 @@ package com.dev.ekart.service;
 import java.util.List;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.CartItemDTO;
-import com.dev.ekart.model.CartItem;
+import com.dev.ekart.requestDTO.CartItemRequestDTO;
+import com.dev.ekart.responseDTO.CartItemResponseDTO;
 
 /**
  * @author Aswin Senthilkumar
@@ -15,11 +15,11 @@ import com.dev.ekart.model.CartItem;
 public interface CartItemService  {
 
 	
-	public ApiResponse<CartItem> addCartItem(CartItemDTO cartitem);
+	public ApiResponse<CartItemResponseDTO> addCartItem(CartItemRequestDTO cartitem);
 
 	/**
 	 * @return
 	 */
-	public ApiResponse<List<CartItem>> getActiveCartItemsDetails(int userId);
+	public ApiResponse<List<CartItemResponseDTO>> getActiveCartItemsDetails(int userId);
 	
 }

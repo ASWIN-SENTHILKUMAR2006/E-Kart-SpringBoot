@@ -1,22 +1,10 @@
 package com.dev.ekart.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
- * @author Aswin Senthilkumar
- *
+ * Legacy DTO package placeholder retained intentionally during migration.
+ * Use `com.dev.ekart.requestDTO.CartRequestDTO` instead.
  */
-
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Deprecated
 public class CartDTO {
-	
-	Integer userId;
-	String Status =  "ACTIVE"; 
-
+	// existing code migrated to requestDTO; this legacy class is intentionally empty.
 }

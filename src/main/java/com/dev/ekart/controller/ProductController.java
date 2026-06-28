@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.dto.ProductDTO;
-import com.dev.ekart.model.Product;
+import com.dev.ekart.requestDTO.ProductRequestDTO;
+import com.dev.ekart.responseDTO.ProductResponseDTO;
 import com.dev.ekart.service.ProductService;
 
 /**
@@ -30,15 +30,15 @@ public class ProductController {
 	ProductService productService;
 	
 	@GetMapping("/list")
-	public ResponseEntity<ApiResponse<List<Product>>> getProductList(){
-		ApiResponse<List<Product>>  response = productService.getProductList();
+	public ResponseEntity<ApiResponse<List<ProductResponseDTO>>> getProductList(){
+		ApiResponse<List<ProductResponseDTO>>  response = productService.getProductList();
 		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping("/add/{SellerId}")
-	public ResponseEntity<ApiResponse<Product>> addProduct(@PathVariable int SellerId , @RequestBody ProductDTO productDTO){
+	public ResponseEntity<ApiResponse<ProductResponseDTO>> addProduct(@PathVariable int SellerId , @RequestBody ProductRequestDTO productDTO){
 		
-		ApiResponse<Product>  response = productService.addProduct(SellerId , productDTO);
+		ApiResponse<ProductResponseDTO>  response = productService.addProduct(SellerId , productDTO);
 		return ResponseEntity.ok(response);
 	}
 	

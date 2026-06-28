@@ -3,7 +3,8 @@ package com.dev.ekart.service;
 import java.util.List;
 
 import com.dev.ekart.ApiResponse;
-import com.dev.ekart.model.Users;
+import com.dev.ekart.requestDTO.UserRequestDTO;
+import com.dev.ekart.responseDTO.UserResponseDTO;
 
 /**
  * @author Aswin Senthilkumar
@@ -11,12 +12,12 @@ import com.dev.ekart.model.Users;
  */
 public interface UserService {
 	
-	public List<Users> getUsers() ;
+	public List<UserResponseDTO> getUsers() ;
 
 	/**
 	 * @param user
 	 * @return
 	 */
-	public ApiResponse<Users> saveUser(Users userData);
+	public ApiResponse<UserResponseDTO> saveUser(UserRequestDTO userData);
 	
 }
