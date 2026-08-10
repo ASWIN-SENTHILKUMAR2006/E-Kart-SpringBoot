@@ -33,12 +33,6 @@ public interface CartService {
 	 * @return
 	 */
 	public ApiResponse<CartResponseDTO> createCart(int userId);
-
-	/**
-	 * @param userId
-	 * @return
-	 */
-	public ApiResponse<String>  checkoutCartItems(int userId);
 }
 
 

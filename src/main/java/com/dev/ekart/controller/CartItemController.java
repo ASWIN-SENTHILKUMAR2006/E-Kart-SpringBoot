@@ -33,16 +33,22 @@ public class CartItemController {
 	@GetMapping("/get/{userId}")//get active cartitems only
 	public ResponseEntity<ApiResponse<List<CartItemResponseDTO>>> getActiveCartItems(@PathVariable int userId ){
 		ApiResponse<List<CartItemResponseDTO>> response = cartItemService.getActiveCartItemsDetails(userId);
-		
+
+		if(response.getSuccess() == false) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	@PostMapping("/add")
 	public ResponseEntity<ApiResponse<CartItemResponseDTO>> addItem(@RequestBody CartItemRequestDTO cartitem){
-		
+
 		ApiResponse<CartItemResponseDTO> response = cartItemService.addCartItem(cartitem) ;
+		if(response.getSuccess() == false) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		}
 		return ResponseEntity.ok(response);
-		
+
 	}
 	
 }

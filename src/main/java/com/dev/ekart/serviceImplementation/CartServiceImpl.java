@@ -12,7 +12,6 @@ import com.dev.ekart.ApiResponse;
 import com.dev.ekart.requestDTO.CartRequestDTO;
 import com.dev.ekart.responseDTO.CartResponseDTO;
 import com.dev.ekart.model.Cart;
-import com.dev.ekart.model.CartItem;
 import com.dev.ekart.model.Users;
 import com.dev.ekart.repository.CartRepository;
 import com.dev.ekart.repository.UserRepository;
@@ -117,19 +116,6 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	
-	public ApiResponse<String>  checkoutCartItems(int userId) {
-		Optional<Cart> activeCart = cartRepo.CheckActiveCartExist(userId);
-		if(activeCart.isEmpty()) {
-			ApiResponse<String> response = new ApiResponse<>("User's Does not have any Active Carts.",false,null);
-			return response;			
-		}
-		Cart data = activeCart.get();
-		List<CartItem> cartItems = data.getCartItem();
-		// TODO: checkout flow is not implemented in the original codebase; returning a placeholder keeps the DTO refactor limited to the coded path.
-		return new ApiResponse<>("Checkout flow is not implemented yet.", false, null);
-		
-	}
-
 	private CartResponseDTO toResponseDTO(Cart cart) {
 		if (cart == null) {
 			return null;

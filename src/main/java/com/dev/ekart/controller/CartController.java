@@ -42,33 +42,27 @@ public class CartController {
 	
 	@GetMapping("/activecarts/{userId}")
 	public ResponseEntity<ApiResponse<Optional<CartResponseDTO>>> getActiveCartList(@PathVariable int userId){
-		
+
 		ApiResponse<Optional<CartResponseDTO>> response =  cartService.getActiveCarts(userId);
+		if(response.getSuccess() == false) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
 		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping("/create") // try - ApiResponse<T>
 	public ResponseEntity<ApiResponse<CartResponseDTO>> createCart(@RequestBody CartRequestDTO cart){
-		
+
 		ApiResponse<CartResponseDTO> response = cartService.saveCart(cart);
-		
+
 		if(response.getSuccess() == true) {
 		ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage(), true , response.getData());
 		return ResponseEntity.ok(serviceResponse);
 		}else {
 			ApiResponse<CartResponseDTO> serviceResponse = new ApiResponse<>(response.getMessage() , false , null);
-			return ResponseEntity.ok(serviceResponse);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(serviceResponse);
 		}
-		
+
 	}
-	
-	@PostMapping("/checkout/{userId}")
-	public ResponseEntity<ApiResponse<String>> checkoutCartItems(@PathVariable int userId){
-		ApiResponse<String>  checkoutDetails = cartService.checkoutCartItems(userId);
-		if(checkoutDetails.getSuccess() == false) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(checkoutDetails);
-		}
-		return ResponseEntity.ok(checkoutDetails);
-	}
-	
+
 }
