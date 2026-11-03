@@ -1,4 +1,4 @@
-🛒 Ekart – Backend E-Commerce System (Spring Boot)  : https://urbancanopy.triospark.in/
+🛒 Ekart – Backend E-Commerce System (Spring Boot)  
 
 
 📌 Overview
